@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Mecánico - Gestión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+        body { background: #f5f6fa; }
+        .sidebar {
+            min-height: 100vh;
+            background: var(--primary);
+            color: white;
+        }
+        .sidebar a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: var(--secondary);
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .stat-card {
+            border-left: 4px solid var(--secondary);
+        }
+        .stat-card.success { border-left-color: var(--success); }
+        .stat-card.warning { border-left-color: var(--warning); }
+        .stat-card.danger { border-left-color: var(--danger); }
+        .table-card { border-radius: 10px; overflow: hidden; }
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar p-0">
+                <div class="p-3 text-center border-bottom">
+                    <h4><i class="fas fa-car-mechanic"></i> Taller</h4>
+                </div>
+                <nav class="nav flex-column">
+                    <a href="#" class="active" onclick="showSection('dashboard')"><i class="fas fa-home me-2"></i> Dashboard</a>
+                    <a href="#" onclick="showSection('clientes')"><i class="fas fa-users me-2"></i> Clientes</a>
+                    <a href="#" onclick="showSection('vehiculos')"><i class="fas fa-car me-2"></i> Vehículos</a>
+                    <a href="#" onclick="showSection('ordenes')"><i class="fas fa-clipboard-list me-2"></i> Órdenes</a>
+                    <a href="#" onclick="showSection('servicios')"><i class="fas fa-tools me-2"></i> Servicios</a>
+                    <a href="#" onclick="showSection('citas')"><i class="fas fa-calendar me-2"></i> Citas</a>
+                    <a href="#" onclick="showSection('reportes')"><i class="fas fa-chart-bar me-2"></i> Reportes BI</a>
+                </nav>
+            </div>
+            
+            <!-- Contenido principal -->
+            <div class="col-md-10 p-4">
+                <!-- Dashboard -->
+                <div id="dashboard">
+                    <h2 class="mb-4">Dashboard</h2>
+                    <div class="row mb-4" id="stats"></div>
+                </div>
+                
+                <!-- Clientes -->
+                <div id="clientes" class="d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Clientes</h2>
+                        <button class="btn btn-primary" onclick="openModal('cliente')"><i class="fas fa-plus"></i> Nuevo</button>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table" id="table-clientes">
+                            <thead><tr><th>Nombre</th><th>Documento</th><th>Teléfono</th><th>Email</th><th>Ciudad</th><th>Acciones</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Vehículos -->
+                <div id="vehiculos" class="d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Vehículos</h2>
+                        <button class="btn btn-primary" onclick="openModal('vehiculo')"><i class="fas fa-plus"></i> Nuevo</button>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table" id="table-vehiculos">
+                            <thead><tr><th>Placa</th><th>Marca/Modelo</th><th>Cliente</th><th>Color</th><th>Kilometraje</th><th>Acciones</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Órdenes -->
+                <div id="ordenes" class="d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Órdenes de Trabajo</h2>
+                        <button class="btn btn-primary" onclick="openModal('orden')"><i class="fas fa-plus"></i> Nueva</button>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table" id="table-ordenes">
+                            <thead><tr><th>#</th><th>Fecha</th><th>Cliente</th><th>Vehículo</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Servicios -->
+                <div id="servicios" class="d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Servicios</h2>
+                        <button class="btn btn-primary" onclick="openModal('servicio')"><i class="fas fa-plus"></i> Nuevo</button>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table" id="table-servicios">
+                            <thead><tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Duración (min)</th><th>Acciones</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Citas -->
+                <div id="citas" class="d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Citas</h2>
+                        <button class="btn btn-primary" onclick="openModal('cita')"><i class="fas fa-plus"></i> Nueva</button>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table" id="table-citas">
+                            <thead><tr><th>Fecha</th><th>Hora</th><th>Cliente</th><th>Vehículo</th><th>Servicio</th><th>Estado</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Reportes BI -->
+                <div id="reportes" class="d-none">
+                    <h2 class="mb-4">Reportes Business Intelligence</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card p-3">
+                                <h5>Servicios Populares</h5>
+                                <canvas id="chart-servicios"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card p-3">
+                                <h5>Ingresos Mensuales</h5>
+                                <canvas id="chart-ingresos"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card p-3">
+                                <h5>Clientes Frecuentes</h5>
+                                <table class="table" id="table-reportes"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Genérico -->
+    <div class="modal fade" id="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveData()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const API = 'http://localhost:5000/api';
+        let currentSection = '';
+        
+        async function fetchData(endpoint) {
+            const res = await fetch(`${API}/${endpoint}`);
+            return res.json();
+        }
+        
+        async function loadDashboard() {
+            const stats = await fetchData('reportes/resumen-general');
+            document.getElementById('stats').innerHTML = `
+                <div class="col-md-3"><div class="card stat-card p-3"><h6>Clientes</h6><h3>${stats.total_clientes}</h3></div></div>
+                <div class="col-md-3"><div class="card stat-card success p-3"><h6>Vehículos</h6><h3>${stats.total_vehiculos}</h3></div></div>
+                <div class="col-md-3"><div class="card stat-card warning p-3"><h6>Órdenes Activas</h6><h3>${stats.ordenes_activas}</h3></div></div>
+                <div class="col-md-3"><div class="card stat-card danger p-3"><h6>Ingresos</h6><h3>$${stats.ingresos_totales.toLocaleString()}</h3></div></div>
+            `;
+        }
+        
+        async function loadClientes() {
+            const clientes = await fetchData('clientes');
+            document.querySelector('#table-clientes tbody').innerHTML = clientes.map(c => `
+                <tr><td>${c.nombre}</td><td>${c.documento}</td><td>${c.telefono}</td><td>${c.email}</td><td>${c.ciudad}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteData('clientes', ${c.id_cliente})"><i class="fas fa-trash"></i></button></td></tr>
+            `).join('');
+        }
+        
+        async function loadVehiculos() {
+            const vehiculos = await fetchData('vehiculos');
+            document.querySelector('#table-vehiculos tbody').innerHTML = vehiculos.map(v => `
+                <tr><td>${v.placa}</td><td>${v.marca} ${v.modelo}</td><td>${v.cliente}</td><td>${v.color}</td><td>${v.kilometraje}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteData('vehiculos', ${v.id_vehiculo})"><i class="fas fa-trash"></i></button></td></tr>
+            `).join('');
+        }
+        
+        async function loadOrdenes() {
+            const ordenes = await fetchData('ordenes');
+            document.querySelector('#table-ordenes tbody').innerHTML = ordenes.map(o => `
+                <tr><td>${o.numero_orden}</td><td>${new Date(o.fecha_ingreso).toLocaleDateString()}</td>
+                <td>${o.cliente}</td><td>${o.placa}</td>
+                <td><span class="status-badge bg-${getStatusColor(o.estado)}">${o.estado}</span></td>
+                <td>$${o.total}</td>
+                <td><button class="btn btn-sm btn-info" onclick="viewOrden(${o.id_orden})"><i class="fas fa-eye"></i></button></td></tr>
+            `).join('');
+        }
+        
+        async function loadServicios() {
+            const servicios = await fetchData('servicios');
+            document.querySelector('#table-servicios tbody').innerHTML = servicios.map(s => `
+                <tr><td>${s.nombre}</td><td>${s.descripcion}</td><td>$${s.precio}</td><td>${s.duracion_estimada}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteData('servicios', ${s.id_servicio})"><i class="fas fa-trash"></i></button></td></tr>
+            `).join('');
+        }
+        
+        async function loadCitas() {
+            const citas = await fetchData('citas');
+            document.querySelector('#table-citas tbody').innerHTML = citas.map(c => `
+                <tr><td>${new Date(c.fecha_cita).toLocaleDateString()}</td><td>${c.hora_cita}</td>
+                <td>${c.cliente}</td><td>${c.vehiculo}</td><td>${c.servicio}</td>
+                <td><span class="status-badge bg-${c.estado === 'Programada' ? 'warning' : 'success'}">${c.estado}</span></td></tr>
+            `).join('');
+        }
+        
+        function getStatusColor(status) {
+            const colors = {'Pendiente': 'warning', 'En Proceso': 'info', 'Completado': 'success', 'Entregado': 'secondary', 'Cancelado': 'danger'};
+            return colors[status] || 'secondary';
+        }
+        
+        function showSection(section) {
+            document.querySelectorAll('[id]').forEach(el => el.id && el.classList.add('d-none'));
+            document.getElementById(section).classList.remove('d-none');
+            currentSection = section;
+            
+            const loads = {dashboard: loadDashboard, clientes: loadClientes, vehiculos: loadVehiculos, 
+                          ordenes: loadOrdenes, servicios: loadServicios, citas: loadCitas};
+            if (loads[section]) loads[section]();
+        }
+        
+        function openModal(type) {
+            const modal = new bootstrap.Modal(document.getElementById('modal'));
+            modal.show();
+        }
+        
+        function saveData() {}
+        function deleteData() {}
+        function viewOrden() {}
+        
+        // Inicializar
+        loadDashboard();
+    </script>
+</body>
+</html>
