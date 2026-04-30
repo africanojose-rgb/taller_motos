@@ -13,7 +13,7 @@ def listar_citas():
             SELECT c.*, cl.nombre AS cliente, m.placa AS vehiculo
             FROM Citas c
             INNER JOIN Clientes cl ON c.id_cliente = cl.id_cliente
-            INNER JOIN Motociletas m ON c.id_moto = m.id_moto
+            INNER JOIN Motocicletas m ON c.id_moto = m.id_moto
             ORDER BY c.fecha_cita DESC
         """)
         return jsonify(citas)

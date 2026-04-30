@@ -25,7 +25,7 @@ def init_database():
 
 
 from routes import config, marcas_motos, clientes, empleados, nomina
-from routes import motociletas, ordenes, servicios, inventario, facturas
+from routes import motocicletas, ordenes, servicios, inventario, facturas
 from routes import reportes, auth, citas, pagos
 
 app.register_blueprint(config.bp)
@@ -33,7 +33,7 @@ app.register_blueprint(marcas_motos.bp)
 app.register_blueprint(clientes.bp)
 app.register_blueprint(empleados.bp)
 app.register_blueprint(nomina.bp)
-app.register_blueprint(motociletas.bp)
+app.register_blueprint(motocicletas.bp)
 app.register_blueprint(ordenes.bp)
 app.register_blueprint(servicios.bp)
 app.register_blueprint(inventario.bp)

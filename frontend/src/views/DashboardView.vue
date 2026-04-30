@@ -33,7 +33,7 @@ function formatCurrency(value: number) {
       </StatsCard>
       
       <div class="card border-l-4 border-l-success">
-        <p class="text-sm text-gray-500 uppercase tracking-wide">Motociletas</p>
+        <p class="text-sm text-gray-500 uppercase tracking-wide">Motocicletas</p>
         <div class="flex items-center gap-2 mt-2">
           <Bike class="w-5 h-5 text-success" />
           <p class="text-2xl font-bold">{{ reportes.resumen.total_vehiculos }}</p>

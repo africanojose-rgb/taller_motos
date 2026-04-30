@@ -15,7 +15,7 @@ import type { Orden } from '@/types'
 const router = useRouter()
 const ordenes = useOrdenesStore()
 const clientes = useClientesStore()
-const motociletas = useMotoStore()
+const motocicletas = useMotoStore()
 const servicios = useServiciosStore()
 const inventarioStore = useInventarioStore()
 
@@ -45,7 +45,7 @@ const productoForm = ref({
 onMounted(() => {
   ordenes.fetchAll()
   clientes.fetchAll()
-  motociletas.fetchAll()
+  motocicletas.fetchAll()
   servicios.fetchAll()
   inventarioStore.fetchProductos()
 })
@@ -186,7 +186,7 @@ function formatCurrency(value: number | undefined) {
           <label class="label">Vehículo *</label>
 <select v-model="form.id_moto" class="input" required>
             <option value="0">Seleccionar vehiculo</option>
-            <option v-for="m in motociletas.motociletas" :key="m.id_moto" :value="m.id_moto">
+            <option v-for="m in motocicletas.motocicletas" :key="m.id_moto" :value="m.id_moto">
               {{ m.placa }} - {{ m.cliente }}
             </option>
           </select>
