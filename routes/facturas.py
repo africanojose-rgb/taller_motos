@@ -35,7 +35,7 @@ def listar_ordenes_sin_factura():
                    (SELECT SUM(subtotal) FROM DetalleOrden WHERE id_orden = o.id_orden AND id_servicio IS NOT NULL) AS mano_obra
             FROM OrdenesTrabajo o
             INNER JOIN Clientes c ON o.id_cliente = c.id_cliente
-            INNER JOIN Motociletas m ON o.id_moto = m.id_moto
+            INNER JOIN Motocicletas m ON o.id_moto = m.id_moto
             LEFT JOIN Facturas f ON o.id_orden = f.id_orden
             WHERE o.estado IN ('Completado', 'Entregado') AND f.id_factura IS NULL
             ORDER BY o.fecha_ingreso DESC
@@ -53,7 +53,7 @@ def obtener_datos_orden(id_orden):
             SELECT o.*, c.nombre AS cliente, c.id_cliente, m.placa, m.id_moto, o.id_empleado
             FROM OrdenesTrabajo o
             INNER JOIN Clientes c ON o.id_cliente = c.id_cliente
-            INNER JOIN Motociletas m ON o.id_moto = m.id_moto
+            INNER JOIN Motocicletas m ON o.id_moto = m.id_moto
             WHERE o.id_orden = ?
         """, (id_orden,))
         

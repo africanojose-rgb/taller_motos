@@ -10,7 +10,7 @@ const navItems = [
   { path: '/configuraciones', label: 'Configuraciones', icon: Settings },
   { path: '/marcas', label: 'Marcas', icon: Bike },
   { path: '/clientes', label: 'Clientes', icon: Users },
-  { path: '/motociletas', label: 'Motociletas', icon: Bike },
+  { path: '/motocicletas', label: 'Motocicletas', icon: Bike },
   { path: '/ordenes', label: 'Ordenes', icon: Wrench },
   { path: '/servicios', label: 'Servicios', icon: Wrench },
   { path: '/inventario', label: 'Inventario', icon: Package },

@@ -11,7 +11,7 @@ import type { Cita } from '@/types'
 
 const store = useCitasStore()
 const clientes = useClientesStore()
-const motociletas = useMotoStore()
+const motocicletas = useMotoStore()
 const showModal = ref(false)
 const editingCita = ref<Cita | null>(null)
 
@@ -27,7 +27,7 @@ const form = ref({
 onMounted(() => {
   store.fetchAll()
   clientes.fetchAll()
-  motociletas.fetchAll()
+  motocicletas.fetchAll()
 })
 
 function openCreate() {
@@ -131,7 +131,7 @@ function getStatusClass(estado: string) {
             <label class="label">Motocicleta *</label>
             <select v-model="form.id_moto" class="input" required>
               <option value="0">Seleccionar</option>
-              <option v-for="m in motociletas.motociletas" :key="m.id_moto" :value="m.id_moto">
+              <option v-for="m in motocicletas.motocicletas" :key="m.id_moto" :value="m.id_moto">
                 {{ m.placa }}
               </option>
             </select>

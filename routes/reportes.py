@@ -30,7 +30,7 @@ def clientes_frecuentes():
                    COUNT(DISTINCT o.id_orden) AS ordenes,
                    COALESCE(SUM(o.total), 0) AS total_gastado
             FROM Clientes c
-            LEFT JOIN Motociletas m ON c.id_cliente = m.id_cliente
+            LEFT JOIN Motocicletas m ON c.id_cliente = m.id_cliente
             LEFT JOIN OrdenesTrabajo o ON c.id_cliente = o.id_cliente
             WHERE c.estado = 1
             GROUP BY c.id_cliente, c.nombre
@@ -77,7 +77,7 @@ def estado_ordenes():
 def resumen_general():
     try:
         total_clientes = get_one("SELECT COUNT(*) AS total FROM Clientes WHERE estado = 1")
-        total_motociletas = get_one("SELECT COUNT(*) AS total FROM Motociletas WHERE estado = 1")
+        total_motocicletas = get_one("SELECT COUNT(*) AS total FROM Motocicletas WHERE estado = 1")
         total_ordenes = get_one("SELECT COUNT(*) AS total FROM OrdenesTrabajo")
         ordenes_activas = get_one("""
             SELECT COUNT(*) AS total FROM OrdenesTrabajo 
@@ -90,7 +90,7 @@ def resumen_general():
         
         return jsonify({
             'total_clientes': total_clientes['total'] if total_clientes else 0,
-            'total_vehiculos': total_motociletas['total'] if total_motociletas else 0,
+            'total_vehiculos': total_motocicletas['total'] if total_motocicletas else 0,
             'total_ordenes': total_ordenes['total'] if total_ordenes else 0,
             'ordenes_activas': ordenes_activas['total'] if ordenes_activas else 0,
             'inversion_inventario': inversion_inventario['total'] if inversion_inventario else 0

@@ -76,9 +76,9 @@ async function remove(id: number) {
 }
 
 const filtered = () => {
-  if (!searchQuery.value) return store.motociletas
+  if (!searchQuery.value) return store.motocicletas
   const q = searchQuery.value.toLowerCase()
-  return store.motociletas.filter(m => 
+  return store.motocicletas.filter(m => 
     m.placa.toLowerCase().includes(q) || m.cliente?.toLowerCase().includes(q)
   )
 }
@@ -87,7 +87,7 @@ const filtered = () => {
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold">Motociletas</h1>
+      <h1 class="text-2xl font-bold">Motocicletas</h1>
       <button @click="openCreate" class="btn btn-primary flex items-center gap-2">
         <Plus class="w-5 h-5" />
         Nueva Moto
@@ -129,8 +129,8 @@ const filtered = () => {
         </tbody>
       </table>
       
-      <div v-if="store.motociletas.length === 0" class="text-center py-8 text-gray-500">
-        No hay motociletas registradas
+      <div v-if="store.motocicletas.length === 0" class="text-center py-8 text-gray-500">
+        No hay motocicletas registradas
       </div>
     </div>
     

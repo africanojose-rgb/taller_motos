@@ -13,7 +13,7 @@ def listar_ordenes():
         ordenes = get_all("""
             SELECT o.*, m.placa, c.nombre AS cliente, e.nombre AS mecanico
             FROM OrdenesTrabajo o
-            INNER JOIN Motociletas m ON o.id_moto = m.id_moto
+            INNER JOIN Motocicletas m ON o.id_moto = m.id_moto
             INNER JOIN Clientes c ON o.id_cliente = c.id_cliente
             LEFT JOIN Empleados e ON o.id_empleado = e.id_empleado
             ORDER BY o.fecha_ingreso DESC
@@ -30,7 +30,7 @@ def obtener_orden(id):
         orden = get_one("""
             SELECT o.*, m.placa, c.nombre AS cliente, e.nombre AS mecanico
             FROM OrdenesTrabajo o
-            INNER JOIN Motociletas m ON o.id_moto = m.id_moto
+            INNER JOIN Motocicletas m ON o.id_moto = m.id_moto
             INNER JOIN Clientes c ON o.id_cliente = c.id_cliente
             LEFT JOIN Empleados e ON o.id_empleado = e.id_empleado
             WHERE o.id_orden = ?
