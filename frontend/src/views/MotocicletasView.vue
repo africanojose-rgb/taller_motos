@@ -70,7 +70,7 @@ async function save() {
 }
 
 async function remove(id: number) {
-  if (confirm('Eliminar esta motocileta?')) {
+  if (confirm('Eliminar esta motocicleta?')) {
     await store.eliminar(id)
   }
 }
@@ -100,7 +100,7 @@ const filtered = () => {
       <div class="mb-4">
         <div class="relative">
           <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <input v-model="searchQuery" type="text" class="input pl-10" placeholder="Buscar motocileta..." />
+          <input v-model="searchQuery" type="text" class="input pl-10" placeholder="Buscar motocicleta..." />
         </div>
       </div>
       

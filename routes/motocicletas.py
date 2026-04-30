@@ -25,7 +25,7 @@ def listar_motocicletas():
 
 @bp.route('/<int:id>', methods=['GET'])
 @require_auth
-def obtener_motocileta(id):
+def obtener_motocicleta(id):
     try:
         moto = get_one("""
             SELECT m.*, c.nombre AS cliente, mo.nombre AS modelo, ma.nombre AS marca
@@ -36,7 +36,7 @@ def obtener_motocileta(id):
             WHERE m.id_moto = ?
         """, (id,))
         if not moto:
-            return jsonify({'error': 'Motocileta no encontrada'}), 404
+            return jsonify({'error': 'Motocicleta no encontrada'}), 404
         return jsonify(moto)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -44,7 +44,7 @@ def obtener_motocileta(id):
 
 @bp.route('', methods=['POST'])
 @require_auth
-def crear_motocileta():
+def crear_motocicleta():
     try:
         data = request.json
         if not data or not data.get('id_cliente') or not data.get('id_modelo') or not data.get('placa'):
@@ -63,7 +63,7 @@ def crear_motocileta():
 
 @bp.route('/<int:id>', methods=['PUT'])
 @require_auth
-def actualizar_motocileta(id):
+def actualizar_motocicleta(id):
     try:
         data = request.json
         execute("""
@@ -73,16 +73,16 @@ def actualizar_motocileta(id):
         """, (data['id_cliente'], data['id_modelo'], data['placa'],
              data.get('color'), data.get('kilometraje'), data.get('vin'),
              data.get('num_serie'), data.get('anio'), id))
-        return jsonify({'message': 'Motocileta actualizada'})
+        return jsonify({'message': 'Motocicleta actualizada'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
 @bp.route('/<int:id>', methods=['DELETE'])
 @require_auth
-def eliminar_motocileta(id):
+def eliminar_motocicleta(id):
     try:
         execute("UPDATE Motocicletas SET estado = 0 WHERE id_moto = ?", (id,))
-        return jsonify({'message': 'Motocileta eliminada'})
+        return jsonify({'message': 'Motocicleta eliminada'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
